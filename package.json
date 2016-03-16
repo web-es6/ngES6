@@ -13,7 +13,8 @@
   "license": "MIT",
   "keywords": [
     "angular",
-    "ecmascript6"
+    "ecmascript6",
+    "babel"
   ],
   "dependencies": {
     "angular": ""
