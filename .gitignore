@@ -1,3 +1,7 @@
 .idea
 .DS_Store
 node_modules
+bundle.js
+vendor.bundle.js
+*.js.map
+**/build/*.svg
