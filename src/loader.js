@@ -10,7 +10,7 @@ function firstToLowerCase(str) {
 export function directives(req, moduleName = 'controllers', dependencies = []) {
     const module = angular.module(moduleName, dependencies);
 
-    req.keys().forEach((filePath) => {
+    req.keys().forEach(filePath => {
         const name    = path.basename(filePath, path.extname(filePath));
         let Directive = req(filePath);
         Directive     = Directive.default ? Directive.default : Directive;
@@ -52,7 +52,7 @@ export function directives(req, moduleName = 'controllers', dependencies = []) {
 export function controllers(req, moduleName = 'controllers', dependencies = []) {
     const module = angular.module(moduleName, dependencies);
 
-    req.keys().forEach((filePath) => {
+    req.keys().forEach(filePath => {
         const name       = path.basename(filePath, path.extname(filePath));
         const Controller = req(filePath);
         module.controller(name, Controller.default ? Controller.default : Controller);
@@ -62,7 +62,7 @@ export function controllers(req, moduleName = 'controllers', dependencies = []) 
 export function services(req, moduleName = 'services', dependencies = []) {
     const module = angular.module(moduleName, dependencies);
 
-    req.keys().forEach((filePath) => {
+    req.keys().forEach(filePath => {
         const name    = path.basename(filePath, path.extname(filePath));
         const Service = req(filePath);
         module.service(name, Service.default ? Service.default : Service);
@@ -72,7 +72,7 @@ export function services(req, moduleName = 'services', dependencies = []) {
 export function factories(req, moduleName = 'factories', dependencies = []) {
     const module = angular.module(moduleName, dependencies);
 
-    req.keys().forEach((filePath) => {
+    req.keys().forEach(filePath => {
         const name    = path.basename(filePath, path.extname(filePath));
         const factory = req(filePath);
         module.factory(name, factory.default ? factory.default : factory);
@@ -82,7 +82,7 @@ export function factories(req, moduleName = 'factories', dependencies = []) {
 export function filters(req, moduleName = 'filters', dependencies = []) {
     const module = angular.module(moduleName, dependencies);
 
-    req.keys().forEach((filePath) => {
+    req.keys().forEach(filePath => {
         const name   = path.basename(filePath, path.extname(filePath));
         const filter = req(filePath);
         module.filter(name, filter.default ? filter.default : filter);
