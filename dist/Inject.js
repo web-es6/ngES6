@@ -64,13 +64,11 @@ var Injector = function () {
             Object.getOwnPropertyNames(this.__proto__).forEach(function (i) {
                 if (i !== 'constructor' && (!pattern || pattern.test(i))) {
                     obj[i] = function () {
-                        var _i;
-
                         for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
                             args[_key2] = arguments[_key2];
                         }
 
-                        return (_i = _this[i]).call.apply(_i, [_this].concat(args));
+                        return _this[i].apply(_this, args);
                     };
                 }
             });
