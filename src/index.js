@@ -1,4 +1,4 @@
 import Injector from './Inject';
-import * as loador from './loador';
+import * as loader from './loader';
 
-export {Injector, loador};
+export {Injector, loader};
