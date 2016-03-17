@@ -35,7 +35,7 @@ export default class Injector {
     attachMethodsTo(obj, pattern = null) {
         Object.getOwnPropertyNames(this.__proto__).forEach(i => {
             if (i !== 'constructor' && (!pattern || pattern.test(i))) {
-                obj[i] = (...args) => this[i].call(this, ...args);
+                obj[i] = (...args) => this[i].apply(this, args);
             }
         });
     }
