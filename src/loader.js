@@ -49,13 +49,18 @@ export function directives(req, moduleName = 'controllers', dependencies = []) {
     });
 }
 
-export function controllers(req, moduleName = 'controllers', dependencies = []) {
+export function controllers(req, moduleName = 'controllers', dependencies = [], templateCache = null) {
     const module = angular.module(moduleName, dependencies);
 
     req.keys().forEach(filePath => {
         const name       = path.basename(filePath, path.extname(filePath));
-        const Controller = req(filePath);
-        module.controller(name, Controller.default ? Controller.default : Controller);
+        let Controller = req(filePath);
+        Controller = Controller.default ? Controller.default : Controller;
+
+        if (templateCache) {
+            templateCache[name] = Controller.$template;
+        }
+        module.controller(name, Controller);
     });
 }
 

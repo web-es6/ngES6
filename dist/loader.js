@@ -90,13 +90,19 @@ function directives(req) {
 function controllers(req) {
     var moduleName = arguments.length <= 1 || arguments[1] === undefined ? 'controllers' : arguments[1];
     var dependencies = arguments.length <= 2 || arguments[2] === undefined ? [] : arguments[2];
+    var templateCache = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
 
     var module = _angular2.default.module(moduleName, dependencies);
 
     req.keys().forEach(function (filePath) {
         var name = _path2.default.basename(filePath, _path2.default.extname(filePath));
         var Controller = req(filePath);
-        module.controller(name, Controller.default ? Controller.default : Controller);
+        Controller = Controller.default ? Controller.default : Controller;
+
+        if (templateCache) {
+            templateCache[name] = Controller.$template;
+        }
+        module.controller(name, Controller);
     });
 }
 
