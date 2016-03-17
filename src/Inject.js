@@ -1,9 +1,9 @@
 const FN_ARGS = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;
 const STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
 export function getParamInjects(fn) {
-    let $inject = fn.$inject;
-    let fnText;
-    let fnArgs;
+    let $inject = fn.$inject,
+        fnText,
+        fnArgs;
 
     if (!$inject) {
         $inject = [];

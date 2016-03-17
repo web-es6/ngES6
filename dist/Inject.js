@@ -14,9 +14,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var FN_ARGS = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;
 var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
 function getParamInjects(fn) {
-    var $inject = fn.$inject;
-    var fnText = void 0;
-    var fnArgs = void 0;
+    var $inject = fn.$inject,
+        fnText = void 0,
+        fnArgs = void 0;
 
     if (!$inject) {
         $inject = [];
