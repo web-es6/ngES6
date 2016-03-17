@@ -16,7 +16,5 @@
     "ecmascript6",
     "babel"
   ],
-  "dependencies": {
-    "angular": "*"
-  }
+  "dependencies": {}
 }
