@@ -9,10 +9,6 @@ exports.services = services;
 exports.factories = factories;
 exports.filters = filters;
 
-var _path = require('path');
-
-var _path2 = _interopRequireDefault(_path);
-
 var _angular = require('angular');
 
 var _angular2 = _interopRequireDefault(_angular);
@@ -33,11 +29,10 @@ function directives(req) {
     var module = _angular2.default.module(moduleName, dependencies);
 
     req.keys().forEach(function (filePath) {
-        var name = _path2.default.basename(filePath, _path2.default.extname(filePath));
         var Directive = req(filePath);
         Directive = Directive.default ? Directive.default : Directive;
 
-        var factory = function factory() {
+        var _directive = function _directive() {
             for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
                 args[_key] = arguments[_key];
             }
@@ -82,8 +77,8 @@ function directives(req) {
             }
             return instance;
         };
-        factory.$inject = Directive.$inject || [];
-        module.directive(firstToLowerCase(name), factory);
+        _directive.$inject = Directive.$inject || [];
+        module.directive(firstToLowerCase(Directive.name), _directive);
     });
 }
 
@@ -95,14 +90,13 @@ function controllers(req) {
     var module = _angular2.default.module(moduleName, dependencies);
 
     req.keys().forEach(function (filePath) {
-        var name = _path2.default.basename(filePath, _path2.default.extname(filePath));
         var Controller = req(filePath);
         Controller = Controller.default ? Controller.default : Controller;
 
         if (templateCache) {
-            templateCache[name] = Controller.$template;
+            templateCache[Controller.name] = Controller.$template;
         }
-        module.controller(name, Controller);
+        module.controller(Controller.name, Controller);
     });
 }
 
@@ -113,9 +107,9 @@ function services(req) {
     var module = _angular2.default.module(moduleName, dependencies);
 
     req.keys().forEach(function (filePath) {
-        var name = _path2.default.basename(filePath, _path2.default.extname(filePath));
         var Service = req(filePath);
-        module.service(name, Service.default ? Service.default : Service);
+        Service = Service.default ? Service.default : Service;
+        module.service(Service.name, Service);
     });
 }
 
@@ -126,9 +120,9 @@ function factories(req) {
     var module = _angular2.default.module(moduleName, dependencies);
 
     req.keys().forEach(function (filePath) {
-        var name = _path2.default.basename(filePath, _path2.default.extname(filePath));
-        var factory = req(filePath);
-        module.factory(name, factory.default ? factory.default : factory);
+        var Factory = req(filePath);
+        Factory = Factory.default ? Factory.default : Factory;
+        module.factory(Factory.name, Factory);
     });
 }
 
@@ -139,8 +133,8 @@ function filters(req) {
     var module = _angular2.default.module(moduleName, dependencies);
 
     req.keys().forEach(function (filePath) {
-        var name = _path2.default.basename(filePath, _path2.default.extname(filePath));
-        var filter = req(filePath);
-        module.filter(name, filter.default ? filter.default : filter);
+        var Filter = req(filePath);
+        Filter = Filter.default ? Filter.default : Filter;
+        module.filter(Filter.name, Filter);
     });
 }

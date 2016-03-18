@@ -1,4 +1,3 @@
-import path from 'path';
 import angular from 'angular';
 import {getParamInjects, storeInjections} from './Inject';
 
@@ -11,11 +10,10 @@ export function directives(req, moduleName = 'controllers', dependencies = []) {
     const module = angular.module(moduleName, dependencies);
 
     req.keys().forEach(filePath => {
-        const name    = path.basename(filePath, path.extname(filePath));
         let Directive = req(filePath);
         Directive     = Directive.default ? Directive.default : Directive;
 
-        const factory = (...args) => {
+        const _directive = (...args) => {
             const instance = new Directive(...args);
             if (instance.link && typeof instance.link === 'function') {
                 const linkOrg  = instance.link;
@@ -44,8 +42,8 @@ export function directives(req, moduleName = 'controllers', dependencies = []) {
             }
             return instance;
         };
-        factory.$inject = Directive.$inject || [];
-        module.directive(firstToLowerCase(name), factory);
+        _directive.$inject = Directive.$inject || [];
+        module.directive(firstToLowerCase(Directive.name), _directive);
     });
 }
 
@@ -53,14 +51,13 @@ export function controllers(req, moduleName = 'controllers', dependencies = [], 
     const module = angular.module(moduleName, dependencies);
 
     req.keys().forEach(filePath => {
-        const name       = path.basename(filePath, path.extname(filePath));
         let Controller = req(filePath);
         Controller = Controller.default ? Controller.default : Controller;
 
         if (templateCache) {
-            templateCache[name] = Controller.$template;
+            templateCache[Controller.name] = Controller.$template;
         }
-        module.controller(name, Controller);
+        module.controller(Controller.name, Controller);
     });
 }
 
@@ -68,9 +65,9 @@ export function services(req, moduleName = 'services', dependencies = []) {
     const module = angular.module(moduleName, dependencies);
 
     req.keys().forEach(filePath => {
-        const name    = path.basename(filePath, path.extname(filePath));
-        const Service = req(filePath);
-        module.service(name, Service.default ? Service.default : Service);
+        let Service = req(filePath);
+        Service = Service.default ? Service.default : Service;
+        module.service(Service.name, Service);
     });
 }
 
@@ -78,9 +75,9 @@ export function factories(req, moduleName = 'factories', dependencies = []) {
     const module = angular.module(moduleName, dependencies);
 
     req.keys().forEach(filePath => {
-        const name    = path.basename(filePath, path.extname(filePath));
-        const factory = req(filePath);
-        module.factory(name, factory.default ? factory.default : factory);
+        let Factory = req(filePath);
+        Factory = Factory.default ? Factory.default : Factory;
+        module.factory(Factory.name, Factory);
     });
 }
 
@@ -88,8 +85,8 @@ export function filters(req, moduleName = 'filters', dependencies = []) {
     const module = angular.module(moduleName, dependencies);
 
     req.keys().forEach(filePath => {
-        const name   = path.basename(filePath, path.extname(filePath));
-        const filter = req(filePath);
-        module.filter(name, filter.default ? filter.default : filter);
+        let Filter = req(filePath);
+        Filter = Filter.default ? Filter.default : Filter;
+        module.filter(Filter.name, Filter);
     });
 }
