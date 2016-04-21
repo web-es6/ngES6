@@ -5,6 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.loader = exports.Injector = undefined;
 
+require('babel-polyfill');
+
 var _Inject = require('./Inject');
 
 var _Inject2 = _interopRequireDefault(_Inject);

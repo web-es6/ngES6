@@ -21,8 +21,7 @@
   },
   "scripts": {
     "test": "babel-node ./node_modules/gulp/bin/gulp.js test",
-    "build": "babel-node ./node_modules/gulp/bin/gulp.js build",
-    "eslint": "node ./node_modules/eslint/bin/eslint.js --ext .js,.jsx ."
+    "build": "babel-node ./node_modules/gulp/bin/gulp.js build"
   },
   "main": "./dist/index.js",
   "devDependencies": {
@@ -35,5 +34,7 @@
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "babel-polyfill": "^6.7.4"
+  }
 }
