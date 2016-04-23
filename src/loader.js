@@ -17,6 +17,25 @@ export function directives(req, moduleName = 'controllers', dependencies = []) {
 
         const _directive = (...args) => {
             const instance = new Directive(...args);
+            if (instance.link && typeof instance.link === 'function') {
+                const linkOrg  = instance.link;
+
+                function _link(...linkArgs) {
+                    linkOrg.apply(instance, linkArgs);
+                }
+
+                instance.link = _link;
+            }
+
+            if (instance.controller && typeof instance.controller === 'function') {
+                const controllerOrg = instance.controller;
+
+                function _controller(...ctrArgs) {
+                    controllerOrg.apply(instance, ctrArgs);
+                }
+
+                instance.controller = _controller;
+            }
             return instance;
         };
         _directive.$inject = Directive.$inject || [];
