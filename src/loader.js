@@ -17,31 +17,6 @@ export function directives(req, moduleName = 'controllers', dependencies = []) {
 
         const _directive = (...args) => {
             const instance = new Directive(...args);
-            if (instance.link && typeof instance.link === 'function') {
-                const linkOrg  = instance.link;
-                const _injects = getParamInjects(linkOrg);
-
-                function _link(...linkArgs) {
-                    linkOrg.apply(instance, linkArgs);
-                    storeInjections(_injects, _link, linkArgs);
-                }
-
-                instance.link = _link;
-                _link.$inject = _injects;
-            }
-
-            if (instance.controller && typeof instance.controller === 'function') {
-                const controllerOrg = instance.controller;
-                const _injects      = getParamInjects(controllerOrg);
-
-                function _controller(...ctrArgs) {
-                    controllerOrg.apply(instance, ctrArgs);
-                    storeInjections(_injects, _controller, ctrArgs);
-                }
-
-                instance.controller = _controller;
-                _controller.$inject = _injects;
-            }
             return instance;
         };
         _directive.$inject = Directive.$inject || [];
@@ -90,6 +65,6 @@ export function filters(req, moduleName = 'filters', dependencies = []) {
     req.keys().forEach(filePath => {
         const name   = path.basename(filePath, path.extname(filePath));
         const Filter = req(filePath);
-        module.filter(name, Filter.default ? Filter.default : Filter);
+        module.filter(firstToLowerCase(name), Filter.default ? Filter.default : Filter);
     });
 }
