@@ -1,12 +1,13 @@
 import path from 'path';
 import angular from 'angular';
+import {getParamInjects, storeInjections} from './Inject';
 
 function firstToLowerCase(str) {
     return str.substr(0, 1).toLowerCase() + str.substr(1);
 }
 
 // const req = require.context('./', true, /.*\.js$/);
-export function directives(req, moduleName = 'directives', dependencies = []) {
+export function directives(req, moduleName = 'controllers', dependencies = []) {
     const module = angular.module(moduleName, dependencies);
 
     req.keys().forEach(filePath => {

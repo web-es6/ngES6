@@ -1,3 +1,21 @@
+const FN_ARGS = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;
+const STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
+export function getParamInjects(fn) {
+    let $inject = fn.$inject,
+        fnText,
+        fnArgs;
+
+    if (!$inject) {
+        $inject = [];
+        fnText = fn.toString().replace(STRIP_COMMENTS, '');
+        fnArgs = fnText.match(FN_ARGS);
+        fnArgs[1].split(',').forEach((name) => {
+            $inject.push(name.trim());
+        });
+        fn.$inject = $inject;
+    }
+    return $inject;
+}
 
 export function storeInjections($inject = [], instance, args, varName = '$injected') {
     const instanceInject = instance[varName] = instance[varName] || {};
